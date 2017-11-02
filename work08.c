@@ -14,7 +14,7 @@ int power(int x, int y) {
 }
 
 char * permHelp (int num) {
-  char ans[3];
+  char * ans = (char *) malloc(3);
   int count = 2;
   char p;
   while (count >= 0) {
@@ -59,7 +59,7 @@ char * perm (mode_t mode) {
   for (count = 2; count > -1; count--) {
     remainder = mode % 8;
     int place = count * 3;
-    perm + place = permHelp(remainder);
+    //    perm + place = permHelp(remainder);
     mode = mode / 8;
   }
   
@@ -97,8 +97,14 @@ int main() {
   //  printf("%d\n", power(2, 2));
 
   printf("\nFile permissions in readable form: \n");
-  printf("permissions 4: %s\n", permHelp(4));
-  printf("permissions 6: %s\n", permHelp(6));
+  
+  char * permission;
+  permission = permHelp(4);
+  printf("permissions 4: %s\n", permission);
+  permission = free(permission);
+  permission = permHelp(6);
+  printf("permissions 6: %s\n", permission);
+  permission = free(permission);
   // printf("%s\n", perm(f_size));
 
   printf("%s\n", sample());
