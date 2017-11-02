@@ -14,7 +14,7 @@ int power(int x, int y) {
 }
 
 char * permHelp (int num) {
-  char * ans = (char *) malloc(3);
+  char * ans = (char *) malloc(4);
   int count = 2;
   char p;
   while (count >= 0) {
@@ -29,40 +29,23 @@ char * permHelp (int num) {
     }
     count--;
   }
-  printf("%s\n", ans);
+  ans[2-count] = 0;
   return ans;
 }
 
 char * perm (mode_t mode) {
-  /*
-  char * ans = (char *) malloc(100);
-  printf("Check malloc'd data: %s\n", ans);
-  int temp = mode % 512, count = 0, num = temp;
-  printf("Mode: %o\n", num);
-  while (count < 3) {
-    printf("%o mod 12 : %o\n", num, num % 12);
-    //num -= num % 12;
-    strcat(ans, permHelp(num % 10));
-    printf("after strcat: %s\n", ans);
-   
-    printf("New num: %o div %d is %d\n", num, 10, num / 10);
-    num = num / 12;
-    count++;
-  }
- 
-  return (char *) ans;
-  */
   mode = mode % 512; //take last three digits
-  char perm[9];
+  char * perm = (char *) malloc(9);
   int count;
   int remainder;
   for (count = 2; count > -1; count--) {
     remainder = mode % 8;
-    int place = count * 3;
-    //    perm + place = permHelp(remainder);
+    char * p = permHelp(remainder);
+    strncpy(perm+count*3, p, 3);
+    free(p);
     mode = mode / 8;
   }
-  
+  return perm;
 }
 
 char * sample() {
@@ -101,12 +84,14 @@ int main() {
   char * permission;
   permission = permHelp(4);
   printf("permissions 4: %s\n", permission);
-  permission = free(permission);
+  free(permission);
   permission = permHelp(6);
   printf("permissions 6: %s\n", permission);
-  permission = free(permission);
-  // printf("%s\n", perm(f_size));
+  free(permission);
+  permission = perm(f_size);
+  printf("%s\n", permission);
+  free(permission);
 
-  printf("%s\n", sample());
+  //printf("%s\n", sample());
 }
 
